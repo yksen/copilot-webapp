@@ -29,4 +29,11 @@ func Init(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Error: %v", err)
 		return
 	}
+
+	addSampleData := "INSERT INTO records (type, value) VALUES ('fuel', '100');"
+
+	if _, err := db.Exec(addSampleData); err != nil {
+		fmt.Fprintf(w, "Error: %v", err)
+		return
+	}
 }
