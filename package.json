@@ -1,0 +1,13 @@
+{
+  "name": "copilot-webapp",
+  "version": "1.0.0",
+  "scripts": {
+    "setup": "yarn vercel login && yarn vercel link",
+    "start": "yarn vercel dev",
+    "dev": "yarn start"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "vercel": "^32.5.4"
+  }
+}
