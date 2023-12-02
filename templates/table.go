@@ -7,14 +7,14 @@ var Table = template.Must(template.New("table").Parse(`
 		<tr>
 			<th>Id</th>
 			<th>CreatedAt</th>
-			<th>RecordType</th>
+			<th>Type</th>
 			<th>Value</th>
 		</tr>
 		{{range $r := .Records}}
 		<tr>
 			<td>{{$r.Id}}</td>
 			<td>{{$r.CreatedAt}}</td>
-			<td>{{$r.RecordType}}</td>
+			<td>{{$r.Type}}</td>
 			<td>{{$r.Value}}</td>
 		</tr>
 		{{end}}
