@@ -1,4 +1,4 @@
-module copilot-webapp
+module github.com/yksen/copilot-webapp
 
 go 1.20
 

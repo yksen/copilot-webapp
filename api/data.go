@@ -3,20 +3,20 @@ package handler
 import (
 	"database/sql"
 	"fmt"
-	"html/template"
 	"net/http"
 	"os"
 
 	_ "github.com/lib/pq"
+	"github.com/yksen/copilot-webapp/templates"
 )
 
-func Data(w http.ResponseWriter, r *http.Request) {
-	check := func(err error) {
-		if err != nil {
-			fmt.Fprintf(w, "Error: %v", err)
-		}
+func check(err error) {
+	if err != nil {
+		fmt.Println(err)
 	}
+}
 
+func Data(w http.ResponseWriter, r *http.Request) {
 	db, err := sql.Open("postgres", os.Getenv("POSTGRES_URL"))
 	check(err)
 
@@ -43,26 +43,6 @@ func Data(w http.ResponseWriter, r *http.Request) {
 		data.Records = append(data.Records, record)
 	}
 
-	tmpl, err := template.New("table").Parse(`
-		<table>
-			<tr>
-				<th>Id</th>
-				<th>CreatedAt</th>
-				<th>RecordType</th>
-				<th>Value</th>
-			</tr>
-			{{range $r := .Records}}
-			<tr>
-				<td>{{$r.Id}}</td>
-				<td>{{$r.CreatedAt}}</td>
-				<td>{{$r.RecordType}}</td>
-				<td>{{$r.Value}}</td>
-			</tr>
-			{{end}}
-		</table>
-	`)
-	check(err)
-
-	err = tmpl.Execute(w, data)
+	templates.Table.Execute(w, data)
 	check(err)
 }
