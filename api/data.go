@@ -67,5 +67,10 @@ func Data(w http.ResponseWriter, r *http.Request) {
 		}
 
 		fmt.Fprintf(w, "Record added successfully. Total records: %d", count)
+		fmt.Fprintf(w, "<br>%s", r)
+		fmt.Fprintf(w, "<br>%s", r.Body)
+		fmt.Fprintf(w, "<br>%s", r.Form)
+		fmt.Fprintf(w, "<br>%s", r.FormValue("type"))
+		fmt.Fprintf(w, "<br>%s", r.FormValue("value"))
 	}
 }
