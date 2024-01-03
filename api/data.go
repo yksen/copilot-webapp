@@ -1,9 +1,11 @@
 package handler
 
 import (
+	"bytes"
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 
@@ -25,6 +27,11 @@ func check(err error) {
 }
 
 func Data(w http.ResponseWriter, r *http.Request) {
+	var bodyBytes []byte
+	if r.Body != nil {
+		bodyBytes, _ = io.ReadAll(r.Body)
+	}
+
 	db, err := sql.Open("postgres", os.Getenv("POSTGRES_URL"))
 	check(err)
 	defer db.Close()
@@ -56,18 +63,24 @@ func Data(w http.ResponseWriter, r *http.Request) {
 
 		if contentType == "application/json" {
 			payload := struct {
-				Type  string
-				Value string
+				UplinkMessage struct {
+					DecodedPayload struct {
+						Type  string
+						Value string
+					}
+				}
 			}{}
 			json.NewDecoder(r.Body).Decode(&payload)
 
-			record.Type = payload.Type
-			record.Value = payload.Value
+			record.Type = payload.UplinkMessage.DecodedPayload.Type
+			record.Value = payload.UplinkMessage.DecodedPayload.Value
 		} else {
 			record.Type = r.FormValue("type")
 			record.Value = r.FormValue("value")
 		}
-		_, err := db.Exec("INSERT INTO records (type, value) VALUES ($1, $2)", record.Type, record.Value)
+
+		r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+		_, err := db.Exec("INSERT INTO records (type, value) VALUES ($1, $2)", record.Type, fmt.Sprintf("%s", r.Body))
 		check(err)
 
 		result, err := db.Query("SELECT COUNT(*) FROM records")
@@ -80,6 +93,5 @@ func Data(w http.ResponseWriter, r *http.Request) {
 		}
 
 		fmt.Fprintf(w, "Record added successfully. Total records: %d\n", count)
-		fmt.Fprintf(w, "%v", record)
 	}
 }
