@@ -2,6 +2,7 @@ package handler
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
@@ -30,7 +31,7 @@ func Data(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case http.MethodGet:
-		rows, err := db.Query("SELECT * FROM records")
+		rows, err := db.Query("SELECT * FROM records ORDER BY created_at DESC")
 		check(err)
 
 		data := struct {
@@ -51,9 +52,21 @@ func Data(w http.ResponseWriter, r *http.Request) {
 
 	case http.MethodPost:
 		record := Record{}
-		record.Type = r.FormValue("type")
-		record.Value = r.FormValue("value")
+		contentType := r.Header.Get("Content-Type")
 
+		if contentType == "application/json" {
+			payload := struct {
+				Type  string
+				Value string
+			}{}
+			json.NewDecoder(r.Body).Decode(&payload)
+
+			record.Type = payload.Type
+			record.Value = payload.Value
+		} else {
+			record.Type = r.FormValue("type")
+			record.Value = r.FormValue("value")
+		}
 		_, err := db.Exec("INSERT INTO records (type, value) VALUES ($1, $2)", record.Type, record.Value)
 		check(err)
 
@@ -66,11 +79,7 @@ func Data(w http.ResponseWriter, r *http.Request) {
 			check(err)
 		}
 
-		fmt.Fprintf(w, "Record added successfully. Total records: %d", count)
-		fmt.Fprintf(w, "<br>%s", r)
-		fmt.Fprintf(w, "<br>%s", r.Body)
-		fmt.Fprintf(w, "<br>%s", r.Form)
-		fmt.Fprintf(w, "<br>%s", r.FormValue("type"))
-		fmt.Fprintf(w, "<br>%s", r.FormValue("value"))
+		fmt.Fprintf(w, "Record added successfully. Total records: %d\n", count)
+		fmt.Fprintf(w, "%v", record)
 	}
 }
