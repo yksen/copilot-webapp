@@ -31,6 +31,7 @@ func Data(w http.ResponseWriter, r *http.Request) {
 	if r.Body != nil {
 		bodyBytes, _ = io.ReadAll(r.Body)
 	}
+	r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 
 	db, err := sql.Open("postgres", os.Getenv("POSTGRES_URL"))
 	check(err)
@@ -65,12 +66,14 @@ func Data(w http.ResponseWriter, r *http.Request) {
 			payload := struct {
 				UplinkMessage struct {
 					DecodedPayload struct {
-						Type  string
-						Value string
-					}
-				}
+						Type  string `json:"type"`
+						Value string `json:"value"`
+					} `json:"decoded_payload"`
+				} `json:"uplink_message"`
 			}{}
-			json.NewDecoder(r.Body).Decode(&payload)
+
+			buffer := bytes.NewBuffer(bodyBytes)
+			json.NewDecoder(buffer).Decode(&payload)
 
 			record.Type = payload.UplinkMessage.DecodedPayload.Type
 			record.Value = payload.UplinkMessage.DecodedPayload.Value
@@ -79,8 +82,7 @@ func Data(w http.ResponseWriter, r *http.Request) {
 			record.Value = r.FormValue("value")
 		}
 
-		r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
-		_, err := db.Exec("INSERT INTO records (type, value) VALUES ($1, $2)", record.Type, fmt.Sprintf("%s", r.Body))
+		_, err := db.Exec("INSERT INTO records (type, value) VALUES ($1, $2)", record.Type, record.Value)
 		check(err)
 
 		result, err := db.Query("SELECT COUNT(*) FROM records")
