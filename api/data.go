@@ -26,13 +26,16 @@ func check(err error) {
 	}
 }
 
-func Data(w http.ResponseWriter, r *http.Request) {
+func getRequestBody(r *http.Request) []byte {
 	var bodyBytes []byte
 	if r.Body != nil {
 		bodyBytes, _ = io.ReadAll(r.Body)
 	}
 	r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+	return bodyBytes
+}
 
+func Data(w http.ResponseWriter, r *http.Request) {
 	db, err := sql.Open("postgres", os.Getenv("POSTGRES_URL"))
 	check(err)
 	defer db.Close()
@@ -60,9 +63,11 @@ func Data(w http.ResponseWriter, r *http.Request) {
 
 	case http.MethodPost:
 		record := Record{}
+		requestBody := getRequestBody(r)
 		contentType := r.Header.Get("Content-Type")
 
-		if contentType == "application/json" {
+		switch contentType {
+		case "application/json":
 			payload := struct {
 				UplinkMessage struct {
 					DecodedPayload struct {
@@ -72,12 +77,12 @@ func Data(w http.ResponseWriter, r *http.Request) {
 				} `json:"uplink_message"`
 			}{}
 
-			buffer := bytes.NewBuffer(bodyBytes)
+			buffer := bytes.NewBuffer(requestBody)
 			json.NewDecoder(buffer).Decode(&payload)
 
 			record.Type = payload.UplinkMessage.DecodedPayload.Type
 			record.Value = payload.UplinkMessage.DecodedPayload.Value
-		} else {
+		case "application/x-www-form-urlencoded":
 			record.Type = r.FormValue("type")
 			record.Value = r.FormValue("value")
 		}
@@ -94,6 +99,6 @@ func Data(w http.ResponseWriter, r *http.Request) {
 			check(err)
 		}
 
-		fmt.Fprintf(w, "Record added successfully. Total records: %d\n", count)
+		fmt.Fprintf(w, "Record added successfully. Total records: %d", count)
 	}
 }
