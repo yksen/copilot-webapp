@@ -4,7 +4,8 @@
   "scripts": {
     "setup": "yarn vercel login && yarn vercel link",
     "start": "yarn vercel dev",
-    "dev": "yarn start"
+    "dev": "yarn start",
+    "css": "tailwindcss -i assets/css/input.css -o assets/css/output.css"
   },
   "license": "ISC",
   "dependencies": {
