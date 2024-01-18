@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strconv"
 
 	_ "github.com/lib/pq"
 	"github.com/yksen/copilot-webapp/templates"
@@ -42,7 +43,15 @@ func Data(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case http.MethodGet:
-		rows, err := db.Query("SELECT * FROM records ORDER BY created_at DESC")
+		recordsPerPage := 10
+		pageString := r.URL.Query().Get("page")
+		page := 0
+		if pageString != "" {
+			page, err = strconv.Atoi(pageString)
+			check(err)
+		}
+
+		rows, err := db.Query("SELECT * FROM records ORDER BY created_at DESC LIMIT $1 OFFSET $2", recordsPerPage, page*recordsPerPage)
 		check(err)
 
 		data := struct {

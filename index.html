@@ -167,8 +167,20 @@
                         </div>
 
                         <div class="p-3">
-                            <div class="border-b p-3">
+                            <div class="flex border-b p-3">
                                 <h5 class="font-bold text-black">Table</h5>
+                                <script>
+                                    var currentPage = 0;
+                                </script>
+                                <div class="ml-auto">
+                                    <button hx-get="/api/data"
+                                        hx-vals='js:{"page": currentPage - 1 >= 0 ? --currentPage : 0}'
+                                        hx-target="#table-body" hx-trigger="click" hx-swap="innerHTML"
+                                        hx-indicator="#spinner"><i class="fas fa-angle-left fa-fw mr-3"></i></button>
+                                    <button hx-get="/api/data" hx-vals='js:{"page": ++currentPage}'
+                                        hx-target="#table-body" hx-trigger="click" hx-swap="innerHTML"
+                                        hx-indicator="#spinner"><i class="fas fa-angle-right fa-fw mr-3"></i></button>
+                                </div>
                             </div>
                             <div class="p-5">
                                 <table class="table-fixed w-full p-5 text-gray-700">
@@ -179,11 +191,15 @@
                                             <th class="text-left text-blue-900">Value</th>
                                         </tr>
                                     </thead>
-                                    <tbody hx-get="/api/data" hx-trigger="load">
+                                    <tbody id="table-body" hx-get="/api/data" hx-trigger="load" hx-indicator="#spinner"
+                                        hx-swap="innerHTML">
+                                    </tbody>
+                                    <tbody id="spinner">
                                         <tr>
                                             <td />
                                             <td class="pt-6">
-                                                <img class="w-10" src="/assets/img/bars.svg" alt="Loading...">
+                                                <img class="w-10 htmx-indicator" src="/assets/img/bars.svg"
+                                                    alt="Loading">
                                             </td>
                                             <td />
                                         </tr>
