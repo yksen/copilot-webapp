@@ -25,15 +25,15 @@
             <li class="my-2 md:my-0">
                 <a href="#"
                     class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
-                    <i class="fas fa-home fa-fw mr-3"></i><span
-                        class="w-auto inline-block pb-1 md:pb-0 text-sm">Home</span>
+                    <i class="fas fa-chart-area fa-fw mr-3 text-indigo-400"></i><span
+                        class="w-auto inline-block pb-1 md:pb-0 text-sm">Analytics</span>
                 </a>
             </li>
             <li class="my-2 md:my-0">
                 <a href="#"
                     class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
-                    <i class="fas fa-chart-area fa-fw mr-3 text-indigo-400"></i><span
-                        class="w-auto inline-block pb-1 md:pb-0 text-sm">Analytics</span>
+                    <i class="fas fa-wrench fa-fw mr-3"></i><span
+                        class="w-auto inline-block pb-1 md:pb-0 text-sm">Tools</span>
                 </a>
             </li>
             <li class="my-2 md:my-0">
@@ -173,11 +173,11 @@
                                     var currentPage = 0;
                                 </script>
                                 <div class="ml-auto">
-                                    <button hx-get="/api/data"
+                                    <button hx-get="/api/analytics"
                                         hx-vals='js:{"page": currentPage - 1 >= 0 ? --currentPage : 0}'
                                         hx-target="#table-body" hx-trigger="click" hx-swap="innerHTML"
                                         hx-indicator="#spinner"><i class="fas fa-angle-left fa-fw mr-3"></i></button>
-                                    <button hx-get="/api/data" hx-vals='js:{"page": ++currentPage}'
+                                    <button hx-get="/api/analytics" hx-vals='js:{"page": ++currentPage}'
                                         hx-target="#table-body" hx-trigger="click" hx-swap="innerHTML"
                                         hx-indicator="#spinner"><i class="fas fa-angle-right fa-fw mr-3"></i></button>
                                 </div>
@@ -191,7 +191,7 @@
                                             <th class="text-left text-blue-900">Value</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="table-body" hx-get="/api/data" hx-trigger="load" hx-indicator="#spinner"
+                                    <tbody id="table-body" hx-get="/api/analytics" hx-trigger="load" hx-indicator="#spinner"
                                         hx-swap="innerHTML">
                                     </tbody>
                                     <tbody id="spinner">
