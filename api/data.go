@@ -5,13 +5,13 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"os"
 	"strconv"
 
 	_ "github.com/lib/pq"
 	"github.com/yksen/copilot-webapp/templates"
+	"github.com/yksen/copilot-webapp/utils"
 )
 
 type Record struct {
@@ -21,24 +21,9 @@ type Record struct {
 	Value     string
 }
 
-func check(err error) {
-	if err != nil {
-		fmt.Println(err)
-	}
-}
-
-func getRequestBody(r *http.Request) []byte {
-	var bodyBytes []byte
-	if r.Body != nil {
-		bodyBytes, _ = io.ReadAll(r.Body)
-	}
-	r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
-	return bodyBytes
-}
-
 func Data(w http.ResponseWriter, r *http.Request) {
 	db, err := sql.Open("postgres", os.Getenv("POSTGRES_URL"))
-	check(err)
+	utils.Check(w, err)
 	defer db.Close()
 
 	switch r.Method {
@@ -48,11 +33,11 @@ func Data(w http.ResponseWriter, r *http.Request) {
 		page := 0
 		if pageString != "" {
 			page, err = strconv.Atoi(pageString)
-			check(err)
+			utils.Check(w, err)
 		}
 
 		rows, err := db.Query("SELECT * FROM records ORDER BY created_at DESC LIMIT $1 OFFSET $2", recordsPerPage, page*recordsPerPage)
-		check(err)
+		utils.Check(w, err)
 
 		data := struct {
 			Records []Record
@@ -63,16 +48,16 @@ func Data(w http.ResponseWriter, r *http.Request) {
 		for rows.Next() {
 			var record Record
 			err = rows.Scan(&record.Id, &record.CreatedAt, &record.Type, &record.Value)
-			check(err)
+			utils.Check(w, err)
 			data.Records = append(data.Records, record)
 		}
 
 		templates.Table.Execute(w, data)
-		check(err)
+		utils.Check(w, err)
 
 	case http.MethodPost:
 		record := Record{}
-		requestBody := getRequestBody(r)
+		requestBody := utils.GetRequestBody(r)
 		contentType := r.Header.Get("Content-Type")
 
 		switch contentType {
@@ -97,15 +82,15 @@ func Data(w http.ResponseWriter, r *http.Request) {
 		}
 
 		_, err := db.Exec("INSERT INTO records (type, value) VALUES ($1, $2)", record.Type, record.Value)
-		check(err)
+		utils.Check(w, err)
 
 		result, err := db.Query("SELECT COUNT(*) FROM records")
-		check(err)
+		utils.Check(w, err)
 
 		var count int
 		for result.Next() {
 			err = result.Scan(&count)
-			check(err)
+			utils.Check(w, err)
 		}
 
 		fmt.Fprintf(w, "Record added successfully. Total records: %d", count)
