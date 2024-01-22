@@ -15,29 +15,30 @@
 
     <script src="https://kit.fontawesome.com/b36132def3.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/htmx.org/dist/htmx.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 </head>
 
-<body class="flex h-full bg-gray-100 font-sans">
+<body class="flex bg-gray-100 font-sans">
 
-    <div id="sidebar" class="h-screen w-16 menu bg-white text-white px-4 flex items-center nunito fixed shadow">
+    <div id="sidebar" class="h-full w-16 menu bg-white text-white px-4 flex items-center nunito fixed shadow">
 
-        <ul class="list-reset ">
+        <ul class="list-reset">
             <li class="my-2 md:my-0">
-                <a href="./"
+                <a href="."
                     class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
-                    <i class="fas fa-chart-area fa-fw mr-3 text-indigo-400"></i><span
+                    <i class="fas fa-chart-area fa-fw mr-3"></i><span
                         class="w-auto inline-block pb-1 md:pb-0 text-sm">Analytics</span>
                 </a>
             </li>
             <li class="my-2 md:my-0">
-                <a href="tools.html"
+                <a href="tools"
                     class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
                     <i class="fas fa-wrench fa-fw mr-3"></i><span
                         class="w-auto inline-block pb-1 md:pb-0 text-sm">Tools</span>
                 </a>
             </li>
             <li class="my-2 md:my-0">
-                <a href="#"
+                <a href="."
                     class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
                     <i class="fa fa-user fa-fw mr-3"></i><span
                         class="w-auto inline-block pb-1 md:pb-0 text-sm">Settings</span>
@@ -47,4 +48,165 @@
 
     </div>
 
+    <div class="flex flex-row flex-wrap flex-grow content-start pl-16 h-[inherit]">
+
+        <div class="h-20 w-full flex flex-wrap">
+            <nav id="header"
+                class="bg-gray-200 w-full lg:max-w-sm flex items-center border-b-1 border-gray-300 order-2 lg:order-1">
+
+                <div class="px-2 w-full">
+                    <select name=""
+                        class="bg-gray-300 border-2 border-gray-200 rounded-full w-full py-3 px-4 text-gray-500 font-bold leading-tight focus:outline-none focus:bg-white focus:shadow-md"
+                        id="form-field2">
+                        <option value="vehicle1">Vehicle 1</option>
+                        <option value="vehicle2">Vehicle 2</option>
+                    </select>
+                </div>
+
+            </nav>
+            <nav id="header1" class="bg-gray-100 w-auto flex-1 border-b-1 border-gray-300 order-1 lg:order-2">
+
+                <div class="flex h-full items-center justify-end">
+
+                    <div class="flex pr-6 ml-auto">
+
+                        <div class="relative text-3xl font-bold">
+                            Copilot
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </nav>
+        </div>
+
+        <div id="dash-content"
+            class="bg-gray-200 py-6 lg:py-0 w-full lg:max-w-sm flex flex-wrap content-start">
+
+            <div class="w-1/2 lg:w-full">
+                <div
+                    class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">
+                    <div class="flex flex-col items-center">
+                        <div class="flex-shrink pr-4">
+                            <div class="rounded-full p-3 bg-gray-300"><i
+                                    class="fa fa-car fa-fw fa-inverse text-indigo-500"></i></div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-3xl">Sample text</h3>
+                            <h5 class="font-bold text-gray-500">Vehicle Model</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-1/2 lg:w-full">
+                <div
+                    class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">
+                    <div class="flex flex-col items-center">
+                        <div class="flex-shrink pr-4">
+                            <div class="rounded-full p-3 bg-gray-300"><i
+                                    class="fas fa-gas-pump fa-fw fa-inverse text-indigo-500"></i></div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-3xl">123 456 km <span class="text-yellow-600"><i
+                                        class="fas fa-caret-up"></i></span></h3>
+                            <h5 class="font-bold text-gray-500">Mileage</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-1/2 lg:w-full">
+                <div
+                    class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">
+                    <div class="flex flex-col items-center">
+                        <div class="flex-shrink pr-4">
+                            <div class="rounded-full p-3 bg-gray-300"><i
+                                    class="fas fa-angles-up fa-fw fa-inverse text-indigo-500"></i></div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-3xl">270 km/h <span class="text-red-500"><i
+                                        class="fas fa-caret-up"></i></span></h3>
+                            <h5 class="font-bold text-gray-500">Top Speed</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-1/2 lg:w-full">
+                <div
+                    class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">
+                    <div class="flex flex-col items-center">
+                        <div class="flex-shrink pr-4">
+                            <div class="rounded-full p-3 bg-gray-300"><i
+                                    class="fas fa-car-battery fa-fw fa-inverse text-indigo-500"></i></div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-3xl">Good <span class="text-green-500"><i
+                                        class="fas fa-plus"></i></span></h3>
+                            <h5 class="font-bold text-gray-500">Vehicle Condition</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="tools" class="flex flex-1 flex-col m-0 p-6">
+
+            <div class="flex flex-1 flex-col">
+                <div class="p-3 border-b flex">
+                    <h5 class="font-bold text-black">Voltage</h5>
+                </div>
+                <div class="p-5 flex flex-1">
+                    <div class="ct-chart w-full" id="chart1"></div>
+                </div>
+            </div>
+            <div class="flex flex-1 flex-col">
+                <div class="p-3 border-b flex">
+                    <h5 class="font-bold text-black">Current</h5>
+                </div>
+                <div class="p-5 flex flex-1">
+                    <div class="ct-chart w-full" id="chart2"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        var mainChart = new Chartist.Line('#chart1', {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            series: [
+                [1, 5, 2, 5, 4, 3],
+                [2, 3, 4, 8, 1, 2],
+                [5, 4, 3, 2, 1, 0.5]
+            ]
+        }, {
+            low: 0,
+            showArea: true,
+            showPoint: false,
+            fullWidth: true
+        });
+
+        var secChart = new Chartist.Line('#chart2', {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            series: [
+                [1, 5, 2, 5, 4, 3],
+                [2, 3, 4, 8, 1, 2],
+                [5, 4, 3, 2, 1, 0.5]
+            ]
+        }, {
+            low: 0,
+            showArea: true,
+            showPoint: false,
+            fullWidth: true
+        });
+    </script>
+
+
 </body>
+
+</html>
