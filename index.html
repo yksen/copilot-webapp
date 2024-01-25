@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -15,17 +15,17 @@
 
     <script src="https://kit.fontawesome.com/b36132def3.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/htmx.org/dist/htmx.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 </head>
 
-<body class="flex h-full bg-gray-100 font-sans">
-
+<body hx-get="/api/index" hx-trigger="load" class="flex bg-gray-100 font-sans">
     <div id="sidebar" class="h-full w-16 menu bg-white text-white px-4 flex items-center nunito fixed shadow">
 
-        <ul class="list-reset ">
+        <ul class="list-reset">
             <li class="my-2 md:my-0">
                 <a href="."
                     class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
-                    <i class="fas fa-chart-area fa-fw mr-3 text-indigo-400"></i><span
+                    <i class="fas fa-chart-area fa-fw mr-3"></i><span
                         class="w-auto inline-block pb-1 md:pb-0 text-sm">Analytics</span>
                 </a>
             </li>
@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li class="my-2 md:my-0">
-                <a href="settings"
+                <a href="."
                     class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
                     <i class="fa fa-user fa-fw mr-3"></i><span
                         class="w-auto inline-block pb-1 md:pb-0 text-sm">Settings</span>
@@ -47,9 +47,9 @@
 
     </div>
 
-    <div class="flex flex-row flex-wrap flex-1 flex-grow content-start pl-16 h-full">
+    <div class="flex flex-row flex-wrap flex-grow content-start pl-16 h-full">
 
-        <div class="h-40 lg:h-20 w-full flex flex-wrap">
+        <div class="h-20 w-full flex flex-wrap">
             <nav id="header"
                 class="bg-gray-200 w-full lg:max-w-sm flex items-center border-b-1 border-gray-300 order-2 lg:order-1">
 
@@ -79,300 +79,6 @@
 
             </nav>
         </div>
-
-        <div id="dash-content"
-            class="bg-gray-200 py-6 lg:py-0 w-full lg:max-w-sm flex flex-wrap content-start lg:h-full">
-
-            <div class="w-1/2 lg:w-full">
-                <div
-                    class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">
-                    <div class="flex flex-col items-center">
-                        <div class="flex-shrink pr-4">
-                            <div class="rounded-full p-3 bg-gray-300"><i
-                                    class="fa fa-car fa-fw fa-inverse text-indigo-500"></i></div>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-bold text-3xl">Sample text</h3>
-                            <h5 class="font-bold text-gray-500">Vehicle Model</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-1/2 lg:w-full">
-                <div
-                    class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">
-                    <div class="flex flex-col items-center">
-                        <div class="flex-shrink pr-4">
-                            <div class="rounded-full p-3 bg-gray-300"><i
-                                    class="fas fa-gas-pump fa-fw fa-inverse text-indigo-500"></i></div>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-bold text-3xl">123 456 km <span class="text-yellow-600"><i
-                                        class="fas fa-caret-up"></i></span></h3>
-                            <h5 class="font-bold text-gray-500">Mileage</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-1/2 lg:w-full">
-                <div
-                    class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">
-                    <div class="flex flex-col items-center">
-                        <div class="flex-shrink pr-4">
-                            <div class="rounded-full p-3 bg-gray-300"><i
-                                    class="fas fa-angles-up fa-fw fa-inverse text-indigo-500"></i></div>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-bold text-3xl">270 km/h <span class="text-red-500"><i
-                                        class="fas fa-caret-up"></i></span></h3>
-                            <h5 class="font-bold text-gray-500">Top Speed</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-1/2 lg:w-full">
-                <div
-                    class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">
-                    <div class="flex flex-col items-center">
-                        <div class="flex-shrink pr-4">
-                            <div class="rounded-full p-3 bg-gray-300"><i
-                                    class="fas fa-car-battery fa-fw fa-inverse text-indigo-500"></i></div>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-bold text-3xl">Good <span class="text-green-500"><i
-                                        class="fas fa-plus"></i></span></h3>
-                            <h5 class="font-bold text-gray-500">Vehicle Condition</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div id="main-content" class="w-full flex-1">
-
-            <div class="flex flex-1 flex-wrap">
-
-                <div class="w-full xl:w-2/3 p-6 xl:max-w-6xl">
-
-                    <div class="max-w-full lg:max-w-3xl xl:max-w-5xl">
-
-                        <div class="border-b p-3">
-                            <h5 class="font-bold text-black">Graph</h5>
-                        </div>
-                        <div class="p-5">
-                            <div class="ct-chart ct-golden-section" id="chart1"></div>
-                        </div>
-
-                        <div class="p-3">
-                            <div class="flex border-b p-3">
-                                <h5 class="font-bold text-black">Table</h5>
-                                <script>
-                                    var currentPage = 0;
-                                </script>
-                                <div class="ml-auto">
-                                    <button hx-get="/api/analytics"
-                                        hx-vals='js:{"page": currentPage - 1 >= 0 ? --currentPage : 0}'
-                                        hx-target="#table-body" hx-trigger="click" hx-swap="innerHTML"
-                                        hx-indicator="#spinner"><i class="fas fa-angle-left fa-fw mr-3"></i></button>
-                                    <button hx-get="/api/analytics" hx-vals='js:{"page": ++currentPage}'
-                                        hx-target="#table-body" hx-trigger="click" hx-swap="innerHTML"
-                                        hx-indicator="#spinner"><i class="fas fa-angle-right fa-fw mr-3"></i></button>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <table class="table-fixed w-full p-5 text-gray-700">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-left text-blue-900">Time</th>
-                                            <th class="text-left text-blue-900">Type</th>
-                                            <th class="text-left text-blue-900">Value</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="table-body" hx-get="/api/analytics" hx-trigger="load"
-                                        hx-indicator="#spinner" hx-swap="innerHTML">
-                                    </tbody>
-                                    <tbody id="spinner">
-                                        <tr>
-                                            <td />
-                                            <td class="pt-6">
-                                                <img class="w-10 htmx-indicator" src="/assets/img/bars.svg"
-                                                    alt="Loading">
-                                            </td>
-                                            <td />
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="w-full xl:w-1/3 p-6 xl:max-w-4xl border-l-1 border-gray-300">
-
-                    <div class="max-w-sm lg:max-w-3xl xl:max-w-5xl">
-
-                        <div class="border-b p-3">
-                            <h5 class="font-bold text-black">Graph</h5>
-                        </div>
-                        <div class="p-5">
-                            <div class="ct-chart ct-golden-section" id="chart2"></div>
-                        </div>
-
-                        <div class="border-b p-3">
-                            <h5 class="font-bold text-black">Graph</h5>
-                        </div>
-                        <div class="p-5">
-                            <div class="ct-chart ct-golden-section" id="chart3"></div>
-                        </div>
-
-                        <div class="border-b p-3">
-                            <h5 class="font-bold text-black">Graph</h5>
-                        </div>
-                        <div class="p-5">
-                            <div class="ct-chart ct-golden-section" id="chart4"></div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-    <script>
-        var mainChart = new Chartist.Line('#chart1', {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-            series: [
-                [1, 5, 2, 5, 4, 3],
-                [2, 3, 4, 8, 1, 2],
-                [5, 4, 3, 2, 1, 0.5]
-            ]
-        }, {
-            low: 0,
-            showArea: true,
-            showPoint: false,
-            fullWidth: true
-        });
-
-        mainChart.on('draw', function (data) {
-            if (data.type === 'line' || data.type === 'area') {
-                data.element.animate({
-                    d: {
-                        begin: 1000 * data.index,
-                        dur: 1000,
-                        from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                        to: data.path.clone().stringify(),
-                        easing: Chartist.Svg.Easing.easeOutQuint
-                    }
-                });
-            }
-        });
-
-        var chartScatter = new Chartist.Line('#chart2', {
-            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-            series: [
-                [12, 9, 7, 8, 5, 4, 6, 2, 3, 3, 4, 6],
-                [4, 5, 3, 7, 3, 5, 5, 3, 4, 4, 5, 5],
-                [5, 3, 4, 5, 6, 3, 3, 4, 5, 6, 3, 4],
-                [3, 4, 5, 6, 7, 6, 4, 5, 6, 7, 6, 3]
-            ]
-        }, {
-            low: 0
-        });
-
-        chartScatter.on('draw', function (data) {
-            if (data.type === 'line' || data.type === 'area') {
-                data.element.animate({
-                    d: {
-                        begin: 500 * data.index,
-                        dur: 1000,
-                        from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                        to: data.path.clone().stringify(),
-                        easing: Chartist.Svg.Easing.easeOutQuint
-                    }
-                });
-            }
-        });
-
-        var chartBar = new Chartist.Bar('#chart3', {
-            labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-            series: [
-                [800000, 1200000, 1400000, 1300000],
-                [200000, 400000, 500000, 300000],
-                [100000, 200000, 400000, 600000]
-            ]
-        }, {
-            stackBars: true,
-            axisY: {
-                labelInterpolationFnc: function (value) {
-                    return (value / 1000) + 'k';
-                }
-            }
-        })
-
-        chartBar.on('draw', function (data) {
-            if (data.type === 'bar') {
-                data.element.attr({
-                    style: 'stroke-width: 30px'
-                }),
-                    data.element.animate({
-                        y2: {
-                            dur: '0.5s',
-                            from: data.y1,
-                            to: data.y2
-                        }
-                    });
-            }
-        });
-
-        var chartPie = new Chartist.Pie('#chart4', {
-            series: [10, 20, 50, 20, 5, 50, 15],
-            labels: [1, 2, 3, 4, 5, 6, 7]
-        }, {
-            donut: true,
-            showLabel: true
-        });
-
-        chartPie.on('draw', function (data) {
-            if (data.type === 'slice') {
-                var pathLength = data.element._node.getTotalLength();
-                data.element.attr({
-                    'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
-                });
-
-                var animationDefinition = {
-                    'stroke-dashoffset': {
-                        id: 'anim' + data.index,
-                        dur: 200,
-                        from: -pathLength + 'px',
-                        to: '0px',
-                        easing: Chartist.Svg.Easing.easeOutQuint,
-                        fill: 'freeze'
-                    }
-                };
-
-                if (data.index !== 0) {
-                    animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
-                }
-
-                data.element.attr({
-                    'stroke-dashoffset': -pathLength + 'px'
-                });
-
-                data.element.animate(animationDefinition, false);
-            }
-        });
-    </script>
 
 </body>
 

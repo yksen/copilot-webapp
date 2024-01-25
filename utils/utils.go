@@ -2,13 +2,23 @@ package utils
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"net/http"
 )
 
 func Check(w http.ResponseWriter, err error) {
 	if err != nil {
+		fmt.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func CheckPanic(w http.ResponseWriter, err error) {
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		panic(err)
 	}
 }
 

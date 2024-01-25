@@ -23,7 +23,7 @@ type Record struct {
 
 func Analytics(w http.ResponseWriter, r *http.Request) {
 	db, err := sql.Open("postgres", os.Getenv("POSTGRES_URL"))
-	utils.Check(w, err)
+	utils.CheckPanic(w, err)
 	defer db.Close()
 
 	switch r.Method {
