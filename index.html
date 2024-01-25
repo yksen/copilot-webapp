@@ -18,27 +18,27 @@
     <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 </head>
 
-<body hx-get="/api/index" hx-trigger="load" class="flex bg-gray-100 font-sans">
+<body class="flex bg-gray-100 font-sans">
     <div id="sidebar" class="h-full w-16 menu bg-white text-white px-4 flex items-center nunito fixed shadow">
 
         <ul class="list-reset">
             <li class="my-2 md:my-0">
-                <a href="."
-                    class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+                <a hx-get="/api/analytics" hx-trigger="click" hx-target="#content" hx-indicator="#spinner"
+                    class="cursor-pointer block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
                     <i class="fas fa-chart-area fa-fw mr-3"></i><span
                         class="w-auto inline-block pb-1 md:pb-0 text-sm">Analytics</span>
                 </a>
             </li>
             <li class="my-2 md:my-0">
-                <a href="tools"
-                    class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+                <a hx-get="/api/tools" hx-trigger="click" hx-target="#content" hx-indicator="#spinner"
+                    class="cursor-pointer block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
                     <i class="fas fa-wrench fa-fw mr-3"></i><span
                         class="w-auto inline-block pb-1 md:pb-0 text-sm">Tools</span>
                 </a>
             </li>
             <li class="my-2 md:my-0">
-                <a href="."
-                    class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+                <a hx-get="/api/index" hx-trigger="click" hx-target="#content" hx-indicator="#spinner"
+                    class="cursor-pointer block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
                     <i class="fa fa-user fa-fw mr-3"></i><span
                         class="w-auto inline-block pb-1 md:pb-0 text-sm">Settings</span>
                 </a>
@@ -47,39 +47,11 @@
 
     </div>
 
-    <div class="flex flex-row flex-wrap flex-grow content-start pl-16 h-full">
+    <div hx-get="/api/index" hx-trigger="load" id="content"
+        class="flex flex-row flex-wrap flex-grow content-start pl-16 h-full">
+    </div>
 
-        <div class="h-20 w-full flex flex-wrap">
-            <nav id="header"
-                class="bg-gray-200 w-full lg:max-w-sm flex items-center border-b-1 border-gray-300 order-2 lg:order-1">
-
-                <div class="px-2 w-full">
-                    <select name=""
-                        class="bg-gray-300 border-2 border-gray-200 rounded-full w-full py-3 px-4 text-gray-500 font-bold leading-tight focus:outline-none focus:bg-white focus:shadow-md"
-                        id="form-field2">
-                        <option value="vehicle1">Vehicle 1</option>
-                        <option value="vehicle2">Vehicle 2</option>
-                    </select>
-                </div>
-
-            </nav>
-            <nav id="header1" class="bg-gray-100 w-auto flex-1 border-b-1 border-gray-300 order-1 lg:order-2">
-
-                <div class="flex h-full items-center justify-end">
-
-                    <div class="flex pr-6 ml-auto">
-
-                        <div class="relative text-3xl font-bold">
-                            Copilot
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </nav>
-        </div>
+    <img id="spinner" class="w-10 htmx-indicator absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        src="/assets/img/bars.svg" alt="Loading">
 
 </body>
-
-</html>

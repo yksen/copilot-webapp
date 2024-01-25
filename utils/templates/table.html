@@ -1,0 +1,9 @@
+{{define "table"}}
+{{range $r := .Records}}
+<tr>
+    <td>{{$r.CreatedAt}}</td>
+    <td>{{$r.Type}}</td>
+    <td>{{$r.Value}}</td>
+</tr>
+{{end}}
+{{end}}

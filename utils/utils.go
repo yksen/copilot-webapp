@@ -2,7 +2,9 @@ package utils
 
 import (
 	"bytes"
+	"embed"
 	"fmt"
+	"html/template"
 	"io"
 	"net/http"
 )
@@ -29,4 +31,15 @@ func GetRequestBody(r *http.Request) []byte {
 	}
 	r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 	return bodyBytes
+}
+
+//go:embed templates/*.html
+var embedFiles embed.FS
+
+func Templates() (*template.Template, error) {
+	templates, err := template.ParseFS(embedFiles, "templates/*.html")
+	if err != nil {
+		return nil, err
+	}
+	return templates, nil
 }
