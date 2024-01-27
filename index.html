@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li class="my-2 md:my-0">
-                <a hx-get="/api/index" hx-trigger="click" hx-target="#content" hx-indicator="#spinner"
+                <a hx-get="/api/settings" hx-trigger="click" hx-target="#content" hx-indicator="#spinner"
                     class="cursor-pointer block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
                     <i class="fa fa-user fa-fw mr-3"></i><span
                         class="w-auto inline-block pb-1 md:pb-0 text-sm">Settings</span>
@@ -47,7 +47,7 @@
 
     </div>
 
-    <div hx-get="/api/index" hx-trigger="load" id="content"
+    <div hx-get="/api/analytics" hx-trigger="load" hx-indicator="#spinner" id="content"
         class="flex flex-row flex-wrap flex-grow content-start pl-16 h-full">
     </div>
 

@@ -2,26 +2,17 @@ package handler
 
 import (
 	"bytes"
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 	"strconv"
 
 	_ "github.com/lib/pq"
 	"github.com/yksen/copilot-webapp/utils"
 )
 
-type Record struct {
-	Id        int
-	CreatedAt string
-	Type      string
-	Value     string
-}
-
 func Records(w http.ResponseWriter, r *http.Request) {
-	db, err := sql.Open("postgres", os.Getenv("POSTGRES_URL"))
+	db, err := utils.GetDatabase()
 	utils.CheckPanic(w, err)
 	defer db.Close()
 
@@ -39,14 +30,14 @@ func Records(w http.ResponseWriter, r *http.Request) {
 		utils.Check(w, err)
 
 		data := struct {
-			Records []Record
+			Records []utils.Record
 		}{
-			Records: []Record{},
+			Records: []utils.Record{},
 		}
 
 		for rows.Next() {
-			var record Record
-			err = rows.Scan(&record.Id, &record.CreatedAt, &record.Type, &record.Value)
+			var record utils.Record
+			err = rows.Scan(&record.RecordId, &record.CreatedAt, &record.Type, &record.Value, &record.VehicleId)
 			utils.Check(w, err)
 			data.Records = append(data.Records, record)
 		}
@@ -54,11 +45,11 @@ func Records(w http.ResponseWriter, r *http.Request) {
 		templates, err := utils.Templates()
 		utils.CheckPanic(w, err)
 
-		err = templates.ExecuteTemplate(w, "table", data)
+		err = templates.ExecuteTemplate(w, "records", data)
 		utils.Check(w, err)
 
 	case http.MethodPost:
-		record := Record{}
+		record := utils.Record{}
 		requestBody := utils.GetRequestBody(r)
 		contentType := r.Header.Get("Content-Type")
 

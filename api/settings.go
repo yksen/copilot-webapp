@@ -3,10 +3,11 @@ package handler
 import (
 	"net/http"
 
+	_ "github.com/lib/pq"
 	"github.com/yksen/copilot-webapp/utils"
 )
 
-func Analytics(w http.ResponseWriter, r *http.Request) {
+func Settings(w http.ResponseWriter, r *http.Request) {
 	db, err := utils.GetDatabase()
 	utils.CheckPanic(w, err)
 	defer db.Close()
@@ -16,7 +17,7 @@ func Analytics(w http.ResponseWriter, r *http.Request) {
 		templates, err := utils.Templates()
 		utils.CheckPanic(w, err)
 
-		err = templates.ExecuteTemplate(w, "analytics", nil)
+		err = templates.ExecuteTemplate(w, "settings", nil)
 		utils.Check(w, err)
 	}
 }
