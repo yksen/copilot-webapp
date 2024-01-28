@@ -93,12 +93,13 @@
                         </script>
                         <div class="ml-auto">
                             <button hx-get="/api/records"
-                                hx-vals='js:{"page": currentPage - 1 >= 0 ? --currentPage : 0}' hx-target="#table-body"
-                                hx-trigger="click" hx-swap="innerHTML" hx-indicator="#table-spinner"><i
-                                    class="fas fa-angle-left fa-fw mr-3"></i></button>
-                            <button hx-get="/api/records" hx-vals='js:{"page": ++currentPage}' hx-target="#table-body"
-                                hx-trigger="click" hx-swap="innerHTML" hx-indicator="#table-spinner"><i
-                                    class="fas fa-angle-right fa-fw mr-3"></i></button>
+                                hx-vals='js:{"page": currentPage - 1 >= 0 ? --currentPage : 0, "vehicleId": selectedVehicleId}'
+                                hx-target="#table-body" hx-trigger="click" hx-swap="innerHTML"
+                                hx-indicator="#table-spinner"><i class="fas fa-angle-left fa-fw mr-3"></i></button>
+                            <button hx-get="/api/records"
+                                hx-vals='js:{"page": ++currentPage, "vehicleId": selectedVehicleId}'
+                                hx-target="#table-body" hx-trigger="click" hx-swap="innerHTML"
+                                hx-indicator="#table-spinner"><i class="fas fa-angle-right fa-fw mr-3"></i></button>
                         </div>
                     </div>
                     <div class="p-5">
@@ -110,8 +111,8 @@
                                     <th class="text-left text-blue-900">Value</th>
                                 </tr>
                             </thead>
-                            <tbody id="table-body" hx-get="/api/records" hx-trigger="load"
-                                hx-indicator="#table-spinner">
+                            <tbody id="table-body" hx-get="/api/records" hx-vals='js:{"vehicleId": selectedVehicleId}'
+                                hx-trigger="load" hx-indicator="#table-spinner">
                             </tbody>
                             <tbody>
                                 <tr id="table-spinner">

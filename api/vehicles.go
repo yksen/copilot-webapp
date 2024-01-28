@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/yksen/copilot-webapp/utils"
 )
@@ -39,13 +38,6 @@ func Vehicles(w http.ResponseWriter, r *http.Request) {
 		utils.Check(w, err)
 	}
 
-	var vehicleId int
-	vehicleIdString := r.URL.Query().Get("vehicleId")
-	if vehicleIdString != "" {
-		vehicleId, err = strconv.Atoi(vehicleIdString)
-		utils.Check(w, err)
-	}
-
 	data := struct {
 		Vehicles []utils.Vehicle
 	}{
@@ -59,15 +51,9 @@ func Vehicles(w http.ResponseWriter, r *http.Request) {
 		var vehicle utils.Vehicle
 		err = rows.Scan(&vehicle.VehicleId, &vehicle.Name)
 		utils.Check(w, err)
-		vehicle.SelectedVehicleId = vehicleId
 		data.Vehicles = append(data.Vehicles, vehicle)
 	}
 
-	if vehicleIdString != "" {
-		err = templates.ExecuteTemplate(w, "vehicleSelect", data)
-		utils.Check(w, err)
-	} else {
-		err = templates.ExecuteTemplate(w, "vehicles", data)
-		utils.Check(w, err)
-	}
+	err = templates.ExecuteTemplate(w, "vehicles", data)
+	utils.Check(w, err)
 }

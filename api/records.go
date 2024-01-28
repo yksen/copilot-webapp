@@ -29,7 +29,18 @@ func Records(w http.ResponseWriter, r *http.Request) {
 			utils.Check(w, err)
 		}
 
-		rows, err := db.Query("SELECT * FROM records ORDER BY created_at DESC LIMIT $1 OFFSET $2", recordsPerPage, page*recordsPerPage)
+		vehicleIdString := r.URL.Query().Get("vehicleId")
+		vehicleId := 0
+		if vehicleIdString != "" {
+			vehicleId, err = strconv.Atoi(vehicleIdString)
+			utils.Check(w, err)
+		}
+
+		if vehicleId == 0 {
+			panic("vehicleId is required")
+		}
+
+		rows, err := db.Query("SELECT * FROM records WHERE vehicle_id = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3", vehicleId, recordsPerPage, page*recordsPerPage)
 		utils.Check(w, err)
 
 		data := struct {

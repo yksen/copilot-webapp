@@ -4,8 +4,9 @@
         <h3 class="text-3xl font-bold">Vehicles</h3>
         <div id="vehicles" class="flex flex-grow flex-wrap gap-4 justify-center w-full">
             {{range $v := .Vehicles}}
-            <button hx-get="/api/vehicles" hx-vals='{"vehicleId": {{$v.VehicleId}}}' hx-target="#vehicleSelect"
-                hx-swap="outerHTML" hx-indicator="#spinner" hx-disabled-elt="this" class="elevated-button text-xl">
+            <button hx-get="/api/analytics" hx-target="#content"
+                hx-vals='js:{"vehicleId": selectVehicle({{$v.VehicleId}})}' hx-indicator="#spinner"
+                class="elevated-button text-xl">
                 {{$v.Name}}
             </button>
             {{end}}
