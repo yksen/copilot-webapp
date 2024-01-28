@@ -22,13 +22,14 @@ type Record struct {
 }
 
 type Vehicle struct {
-	VehicleId       int
-	CreatedAt       string
-	Name            string
-	ApiKey          string
-	ApplicationName string
-	WebhookName     string
-	DeviceName      string
+	VehicleId         int
+	CreatedAt         string
+	Name              string
+	ApiKey            string
+	ApplicationName   string
+	WebhookName       string
+	DeviceName        string
+	SelectedVehicleId int
 }
 
 func Check(w http.ResponseWriter, err error) {

@@ -12,7 +12,7 @@ func Init(w http.ResponseWriter, r *http.Request) {
 	utils.CheckPanic(w, err)
 	defer db.Close()
 
-	dropVehicles := `DROP TABLE IF EXISTS vehicles;`
+	dropVehicles := `DROP TABLE IF EXISTS vehicles CASCADE;`
 	_, err = db.Exec(dropVehicles)
 	utils.Check(w, err)
 
@@ -47,7 +47,9 @@ func Init(w http.ResponseWriter, r *http.Request) {
 
 	populateVehicles := `
 		INSERT INTO vehicles (name, api_key, application_name, webhook_name, device_name)
-		VALUES ('test', 'test', 'test', 'test', 'test');`
+		VALUES ('test', 'test', 'test', 'test', 'test'),
+			   ('test2', 'test2', 'test2', 'test2', 'test2'),
+			   ('test3', 'test3', 'test3', 'test3', 'test3');`
 	_, err = db.Exec(populateVehicles)
 	utils.Check(w, err)
 

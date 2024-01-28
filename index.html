@@ -18,10 +18,17 @@
     <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 </head>
 
-<body class="flex bg-gray-100 font-sans">
-    <div id="sidebar" class="h-full w-16 menu bg-white text-white px-4 flex items-center nunito fixed shadow">
+<body class="font-sans">
+    <nav id="sidebar" class="h-full w-16 menu bg-white text-white px-4 flex items-center nunito fixed shadow">
 
         <ul class="list-reset">
+            <li class="my-2 md:my-0">
+                <a hx-get="/api/vehicles" hx-trigger="click" hx-target="#content" hx-indicator="#spinner"
+                    class="cursor-pointer block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+                    <i class="fa fa-car fa-fw mr-3"></i><span
+                        class="w-auto inline-block pb-1 md:pb-0 text-sm">Vehicles</span>
+                </a>
+            </li>
             <li class="my-2 md:my-0">
                 <a hx-get="/api/analytics" hx-trigger="click" hx-target="#content" hx-indicator="#spinner"
                     class="cursor-pointer block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
@@ -36,18 +43,26 @@
                         class="w-auto inline-block pb-1 md:pb-0 text-sm">Tools</span>
                 </a>
             </li>
-            <li class="my-2 md:my-0">
-                <a hx-get="/api/settings" hx-trigger="click" hx-target="#content" hx-indicator="#spinner"
-                    class="cursor-pointer block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
-                    <i class="fa fa-user fa-fw mr-3"></i><span
-                        class="w-auto inline-block pb-1 md:pb-0 text-sm">Settings</span>
-                </a>
-            </li>
         </ul>
 
-    </div>
+    </nav>
 
-    <div hx-get="/api/analytics" hx-trigger="load" hx-indicator="#spinner" id="content"
+    <header class="h-20 w-full flex pl-16">
+        <nav id="vehicleSelect"
+            class="hidden bg-gray-200 w-full max-w-sm items-center border-b-1 border-gray-300 order-1">
+        </nav>
+        <nav id="title" class="bg-gray-100 w-auto flex-1 border-b-1 border-gray-300 order-1 lg:order-2">
+            <div class="flex h-full items-center justify-end">
+                <div class="flex px-6 ml-auto">
+                    <div class="relative text-3xl font-bold">
+                        Copilot
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div hx-get="/api/vehicles" hx-trigger="load" hx-indicator="#spinner" id="content"
         class="flex flex-row flex-wrap flex-grow content-start pl-16 h-full">
     </div>
 

@@ -16,6 +16,9 @@ func Records(w http.ResponseWriter, r *http.Request) {
 	utils.CheckPanic(w, err)
 	defer db.Close()
 
+	templates, err := utils.Templates()
+	utils.CheckPanic(w, err)
+
 	switch r.Method {
 	case http.MethodGet:
 		recordsPerPage := 10
@@ -41,9 +44,6 @@ func Records(w http.ResponseWriter, r *http.Request) {
 			utils.Check(w, err)
 			data.Records = append(data.Records, record)
 		}
-
-		templates, err := utils.Templates()
-		utils.CheckPanic(w, err)
 
 		err = templates.ExecuteTemplate(w, "records", data)
 		utils.Check(w, err)
@@ -76,6 +76,8 @@ func Records(w http.ResponseWriter, r *http.Request) {
 
 		_, err := db.Exec("INSERT INTO records (type, value) VALUES ($1, $2)", record.Type, record.Value)
 		utils.Check(w, err)
+
+		w.WriteHeader(http.StatusCreated)
 
 		result, err := db.Query("SELECT COUNT(*) FROM records")
 		utils.Check(w, err)

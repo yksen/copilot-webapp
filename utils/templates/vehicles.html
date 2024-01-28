@@ -1,0 +1,66 @@
+{{define "vehicles"}}
+<div class="flex flex-wrap w-full h-full p-6">
+    <div class="flex flex-wrap gap-4 justify-center w-full pb-6 border-b">
+        <h3 class="text-3xl font-bold">Vehicles</h3>
+        <div id="vehicles" class="flex flex-grow flex-wrap gap-4 justify-center w-full">
+            {{range $v := .Vehicles}}
+            <button hx-get="/api/vehicles" hx-vals='{"vehicleId": {{$v.VehicleId}}}' hx-target="#vehicleSelect"
+                hx-swap="outerHTML" hx-indicator="#spinner" hx-disabled-elt="this" class="elevated-button text-xl">
+                {{$v.Name}}
+            </button>
+            {{end}}
+        </div>
+    </div>
+
+    <div class="flex justify-center w-full p-6">
+        <form hx-post="/api/vehicles" hx-target="#content" hx-disabled-elt="this" class="w-full max-w-2xl">
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="vehicles-input-label" for="vehicleName">
+                        Vehicle Name
+                    </label>
+                    <input class="vehicles-input mb-3 focus:border-gray-500" name="vehicleName" id="vehicleName"
+                        type="text" placeholder="Vehicle">
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    <label class="vehicles-input-label" for="applicationName">
+                        Application Name
+                    </label>
+                    <input class="vehicles-input" name="applicationName" id="applicationName" type="text"
+                        placeholder="Application">
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-3">
+                    <label class="vehicles-input-label" for="apiKey">
+                        API Key
+                    </label>
+                    <input class="vehicles-input mb-3" name="apiKey" id="apiKey" type="password"
+                        placeholder="******************">
+                    <p class="text-gray-600 text-xs italic">Make sure it's granted "Write downlink application traffic"
+                        rights</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="vehicles-input-label" for="webhookName">
+                        Webhook Name
+                    </label>
+                    <input class="vehicles-input mb-3 focus:border-gray-500" name="webhookName" id="webhookName"
+                        type="text" placeholder="Webhook">
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    <label class="vehicles-input-label" for="deviceName">
+                        Device Name
+                    </label>
+                    <input class="vehicles-input" name="deviceName" id="deviceName" type="text" placeholder="Device">
+                </div>
+            </div>
+            <button class="elevated-button">
+                Add Vehicle
+            </button>
+        </form>
+    </div>
+
+</div>
+{{end}}

@@ -11,11 +11,11 @@ func Analytics(w http.ResponseWriter, r *http.Request) {
 	utils.CheckPanic(w, err)
 	defer db.Close()
 
+	templates, err := utils.Templates()
+	utils.CheckPanic(w, err)
+
 	switch r.Method {
 	case http.MethodGet:
-		templates, err := utils.Templates()
-		utils.CheckPanic(w, err)
-
 		err = templates.ExecuteTemplate(w, "analytics", nil)
 		utils.Check(w, err)
 	}

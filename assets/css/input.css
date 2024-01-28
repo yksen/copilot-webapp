@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .vehicles-input {
+        @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500;
+    }
+    .vehicles-input-label {
+        @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
+    }
+    .elevated-button {
+        @apply bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow;
+    }
+}
+
 .nunito {
     font-family: 'nunito', font-sans;
 }
