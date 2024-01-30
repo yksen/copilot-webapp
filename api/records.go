@@ -37,7 +37,8 @@ func Records(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if vehicleId == 0 {
-			panic("vehicleId is required")
+			w.WriteHeader(http.StatusBadRequest)
+			return
 		}
 
 		rows, err := db.Query("SELECT * FROM records WHERE vehicle_id = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3", vehicleId, recordsPerPage, page*recordsPerPage)
