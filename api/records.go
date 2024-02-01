@@ -36,12 +36,8 @@ func Records(w http.ResponseWriter, r *http.Request) {
 			utils.Check(w, err)
 		}
 
-		if vehicleId == 0 {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-
-		rows, err := db.Query("SELECT * FROM records WHERE vehicle_id = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3", vehicleId, recordsPerPage, page*recordsPerPage)
+		rows, err := db.Query("SELECT * FROM records WHERE vehicle_id = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3",
+			vehicleId, recordsPerPage, page*recordsPerPage)
 		utils.Check(w, err)
 
 		data := struct {

@@ -5,9 +5,17 @@
         <div
             class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6 w-full">
             <div class="flex flex-col items-start">
-                <div class="flex-1">
-                    <h3 class="font-bold text-xl">Voltage measurement</h3>
-                </div>
+                <form hx-post="/api/tools" hx-vals='js:{"vehicleId": selectedVehicleId, "toolId": "1"}' hx-swap="none"
+                    hx-disabled-elt="this">
+                    <div class="flex-1">
+                        <h3 class="font-bold text-xl">Voltage measurement</h3>
+                        <input hx-validate="true" required name="duration" type="number" placeholder="Duration [s]"
+                            min="1" max="4294967295" class="input-field my-4">
+                        <button class="elevated-button">
+                            Start measurement
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -16,9 +24,17 @@
         <div
             class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6 w-full">
             <div class="flex flex-col items-start">
-                <div class="flex-1">
-                    <h3 class="font-bold text-xl">Current measurement</h3>
-                </div>
+                <form hx-post="/api/tools" hx-vals='js:{"vehicleId": selectedVehicleId, "toolId": "2"}' hx-swap="none"
+                    hx-disabled-elt="this">
+                    <div class="flex-1">
+                        <h3 class="font-bold text-xl">Current measurement</h3>
+                        <input hx-validate="true" required name="duration" type="number" placeholder="Duration [s]"
+                            min="1" max="4294967295" class="input-field my-4">
+                        <button class="elevated-button">
+                            Start measurement
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -27,9 +43,23 @@
         <div
             class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6 w-full">
             <div class="flex flex-col items-start">
-                <div class="flex-1">
-                    <h3 class="font-bold text-xl">Pulse-width modulation</h3>
-                </div>
+                <form hx-post="/api/tools" hx-vals='js:{"vehicleId": selectedVehicleId, "toolId": "3"}' hx-swap="none"
+                    hx-disabled-elt="this">
+                    <div class="flex-1">
+                        <h3 class="font-bold text-xl">Pulse-width modulation</h3>
+                        <label for="force" class="input-field-label">Force</label>
+                        <input name="force" type="checkbox" class="my-4">
+                        <input hx-validate="true" required name="duration" type="number" placeholder="Duration [s]"
+                            min="1" max="4294967295" class="input-field my-4">
+                        <input hx-validate="true" required name="duty" type="number" placeholder="Duty [%]" min="0"
+                            max="100" class="input-field my-4">
+                        <input hx-validate="true" required name="frequency" type="number" placeholder="Frequency [Hz]"
+                            min="0" max="4294967295" class="input-field my-4">
+                        <button class="elevated-button">
+                            Change
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -38,9 +68,17 @@
         <div
             class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6 w-full">
             <div class="flex flex-col items-start">
-                <div class="flex-1">
-                    <h3 class="font-bold text-xl">Power relay</h3>
-                </div>
+                <form hx-post="/api/tools" hx-vals='js:{"vehicleId": selectedVehicleId, "toolId": "4"}' hx-swap="none"
+                    hx-disabled-elt="this">
+                    <div class="flex-1">
+                        <h3 class="font-bold text-xl">Power relay</h3>
+                        <label for="state" class="input-field-label">State</label>
+                        <input name="state" type="checkbox" class="my-4">
+                        <button class="elevated-button">
+                            Change
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

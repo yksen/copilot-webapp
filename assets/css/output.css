@@ -534,7 +534,7 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.vehicles-input {
+.input-field {
   display: block;
   width: 100%;
   -webkit-appearance: none;
@@ -555,7 +555,7 @@ video {
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
-.vehicles-input:focus {
+.input-field:focus {
   --tw-border-opacity: 1;
   border-color: rgb(107 114 128 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
@@ -564,7 +564,7 @@ video {
   outline-offset: 2px;
 }
 
-.vehicles-input-label {
+.input-field-label {
   margin-bottom: 0.5rem;
   display: block;
   font-size: 0.75rem;
@@ -645,6 +645,11 @@ video {
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .mb-3 {
@@ -809,6 +814,10 @@ video {
   border-bottom-width: 1px;
 }
 
+.border-b-2 {
+  border-bottom-width: 2px;
+}
+
 .border-dashed {
   border-style: dashed;
 }
@@ -821,6 +830,11 @@ video {
 .border-gray-400 {
   --tw-border-opacity: 1;
   border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
 .bg-blue-500 {
