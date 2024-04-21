@@ -82,7 +82,8 @@ func Records(w http.ResponseWriter, r *http.Request) {
 			record.Value = r.FormValue("value")
 		}
 
-		_, err := db.Exec("INSERT INTO records (type, value) VALUES ($1, $2)", record.Type, record.Value)
+		_, err := db.Exec("INSERT INTO records (type, value) VALUES"+
+			" ($1, $2)", record.Type, record.Value)
 		utils.Check(w, err)
 
 		w.WriteHeader(http.StatusCreated)
@@ -96,6 +97,7 @@ func Records(w http.ResponseWriter, r *http.Request) {
 			utils.Check(w, err)
 		}
 
-		fmt.Fprintf(w, "Record added successfully. Total records: %d", count)
+		fmt.Fprintf(w, "Record added successfully. Total records: %d",
+			count)
 	}
 }
