@@ -82,8 +82,14 @@ func Records(w http.ResponseWriter, r *http.Request) {
 			record.Value = r.FormValue("value")
 		}
 
-		_, err := db.Exec("INSERT INTO records (type, value) VALUES"+
-			" ($1, $2)", record.Type, record.Value)
+		var vehicleId int
+		vehicleIdRow := db.QueryRow("SELECT vehicle_id FROM vehicles ORDER BY" +
+			" created_at DESC LIMIT 1")
+		err = vehicleIdRow.Scan(&vehicleId)
+		utils.Check(w, err)
+
+		_, err = db.Exec("INSERT INTO records (type, value, vehicle_id) VALUES"+
+			" ($1, $2, $3)", record.Type, record.Value, vehicleId)
 		utils.Check(w, err)
 
 		w.WriteHeader(http.StatusCreated)
